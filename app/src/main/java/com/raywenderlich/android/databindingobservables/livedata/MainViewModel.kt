@@ -37,6 +37,7 @@ package com.raywenderlich.android.databindingobservables.livedata
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
+import com.raywenderlich.android.databindingobservables.model.PhoneNumber
 import com.raywenderlich.android.databindingobservables.model.Session
 import com.raywenderlich.android.databindingobservables.utils.getEmailPrefix
 import java.util.*
@@ -73,7 +74,9 @@ class MainViewModel : ViewModel() {
 
     // TODO: Add username
     // TODO: Add a way to enable the registration button
+
     // TODO: Add phone number
+    val phoneNumber = PhoneNumber()
 
     private val _showRegistrationSuccessDialog = MutableLiveData(false)
     val showRegistrationSuccessDialog: LiveData<Boolean>
