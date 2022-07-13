@@ -36,9 +36,11 @@ package com.raywenderlich.android.databindingobservables.livedata
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.raywenderlich.android.databindingobservables.R
+import com.raywenderlich.android.databindingobservables.databinding.ActivityMainLivedataBinding
 
 /**
  * Main Screen
@@ -46,22 +48,34 @@ import com.raywenderlich.android.databindingobservables.R
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         // Switch to AppTheme for displaying the activity
         setTheme(R.style.AppTheme)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_livedata)
 
-        // Set up the viewModel
-        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        // 1. Set up the viewModel: MainViewModel.kt
+        val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.showRegistrationSuccessDialog.observe(this) { showRegistrationSuccessDialog ->
             if (showRegistrationSuccessDialog) {
                 showBottomSheetDialog()
             }
         }
 
-        // Set up data binding
-        // TODO: Set up data binding
+        // 2. Set up data binding
+        val binding = DataBindingUtil.setContentView<ActivityMainLivedataBinding>(
+            this,
+            R.layout.activity_main_livedata
+        )
+
+        // 3. This is used for observing data in the binding. This controls when observing data starts and stops
+        binding.lifecycleOwner = this
+
+        // 4. The variable viewModel of type MainViewModel you defined above in the layout file.
+        // Bind XML: activity_main_livedata.xml to the MainViewModel.kt file
+        binding.viewModel = viewModel
+
     }
 
     /** Displays a [BottomSheetDialog] after a successful registration */
@@ -70,4 +84,5 @@ class MainActivity : AppCompatActivity() {
         dialog.setContentView(R.layout.bottom_sheet_dialog_registration_success)
         dialog.show()
     }
+
 }

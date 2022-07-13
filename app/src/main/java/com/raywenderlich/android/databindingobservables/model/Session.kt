@@ -36,5 +36,8 @@ package com.raywenderlich.android.databindingobservables.model
 
 /** Types of sessions/classes the user can enroll in at the gym. */
 enum class Session {
-    MORNING, NOON, EVENING, NIGHT
+    MORNING,
+    NOON,
+    EVENING,
+    NIGHT
 }

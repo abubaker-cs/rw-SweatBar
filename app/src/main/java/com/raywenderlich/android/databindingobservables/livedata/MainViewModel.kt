@@ -36,7 +36,10 @@ package com.raywenderlich.android.databindingobservables.livedata
 
 import android.util.Log
 import androidx.lifecycle.*
+import androidx.lifecycle.Observer
+import com.raywenderlich.android.databindingobservables.model.Session
 import com.raywenderlich.android.databindingobservables.utils.getEmailPrefix
+import java.util.*
 
 private const val DEFAULT_FIRST_NAME = ""
 private const val DEFAULT_LAST_NAME = ""
@@ -45,8 +48,29 @@ private const val TAG = "LiveData-ViewModel"
 
 class MainViewModel : ViewModel() {
 
-    // TODO: Add first name, last name and email
+    // TO DO: Add first name, last name and email
+    // https://www.raywenderlich.com/27690200-advanced-data-binding-in-android-observables#toc-anchor-005
+    val firstName = MutableLiveData(DEFAULT_FIRST_NAME)
+    val lastName = MutableLiveData(DEFAULT_LAST_NAME)
+    val email = MutableLiveData(DEFAULT_EMAIL)
+
     // TODO: Add sessions
+
+    // 1. A map with keys of type Session and values of type Boolean is created.
+    //    EnumMap is a map optimized for enum keys.
+    val sessions = MutableLiveData<EnumMap<Session, Boolean>>(
+        EnumMap(Session::class.java)
+    ).apply { // 1
+
+        // 2.The map is populated with all the possible sessions and setting their value to false,
+        //   since by default the user isn’t enrolled in any sessions.
+        Session.values().forEach {
+            value?.put(it, false)
+        } // 2
+
+    }
+
+
     // TODO: Add username
     // TODO: Add a way to enable the registration button
     // TODO: Add phone number
