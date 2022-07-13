@@ -34,10 +34,26 @@
 
 package com.raywenderlich.android.databindingobservables.model
 
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import com.raywenderlich.android.databindingobservables.BR
+
 /** A model that wraps the phone number's 2 parts. */
-class PhoneNumber {
+class PhoneNumber : BaseObservable() {
 
     // TODO: Make the phone number and its fields observable
+    @get:Bindable
     var areaCode: String = ""
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.areaCode)
+        }
+
+    @get:Bindable
     var number: String = ""
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.number)
+        }
+
 }
