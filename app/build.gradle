@@ -1,0 +1,48 @@
+plugins {
+  id 'com.android.application'
+  id 'org.jetbrains.kotlin.android'
+  id 'kotlin-kapt' // Required by DataBinding
+  id 'androidx.navigation.safeargs.kotlin' // Required by the nav_graph Navigation Component
+}
+
+android {
+  compileSdk 32
+  buildToolsVersion "30.0.3"
+
+  defaultConfig {
+    applicationId "com.raywenderlich.android.databindingobservables"
+    minSdk 21
+    targetSdk 32
+    versionCode 1
+    versionName "1.0"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+
+  buildFeatures {
+    viewBinding true
+    dataBinding true
+  }
+}
+
+dependencies {
+  // Kotlin
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  // Support Libraries
+  implementation 'androidx.appcompat:appcompat:1.4.2'
+  implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+  // TUTORIAL DEPENDENCIES HERE
+  implementation 'com.google.android.material:material:1.6.1'
+  implementation 'androidx.core:core-ktx:1.8.0'
+  implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
+  implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'
+}
