@@ -7,6 +7,7 @@
     <data>
 
         <import type="com.raywenderlich.android.databindingobservables.model.Session" />
+
         <import type="android.view.View" />
 
         <variable
@@ -213,6 +214,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:enabled="@{viewModel.enableRegistration}"
+                android:onClick="@{(view) -> viewModel.onRegisterClicked()}"
                 android:text="@string/register_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

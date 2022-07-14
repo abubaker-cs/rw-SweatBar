@@ -73,7 +73,7 @@ class MainViewModel : ViewModel() {
     }
 
 
-    // TODO: Add username
+    // TO DO: Add username
 
     val showUsername: LiveData<Boolean> = Transformations.map(
 
@@ -91,9 +91,26 @@ class MainViewModel : ViewModel() {
     // new username, which username then emits.
     val username: LiveData<String> = Transformations.map(email, ::generateUsername)
 
-    // TODO: Add a way to enable the registration button
+    // TO DO: Add a way to enable the registration button
+    // You create a new MediatorLiveData instance that emits Booleans: true to enable the
+    // registration button and false to disable it.
+    val enableRegistration: LiveData<Boolean> = MediatorLiveData<Boolean>().apply { // 1
 
-    // TODO: Add phone number
+        // You observe the required user information fields: firstName, lastName and email.
+        addSources(
+            firstName,
+            lastName,
+            email
+        ) { // 2
+
+            // Whenever the value of any of the fields changes, you emit a new Boolean,
+            // indicating whether or not to enable the registration button.
+            value = isUserInformationValid() // 3
+
+        }
+    }
+
+    // TO DO: Add phone number
     val phoneNumber = PhoneNumber()
 
     // ----------------------------------------------------------------------
@@ -124,12 +141,25 @@ class MainViewModel : ViewModel() {
      * Everything else is optional.
      */
     private fun isUserInformationValid(): Boolean {
-        return false
+        return !firstName.value.isNullOrBlank()
+                && !lastName.value.isNullOrBlank()
+                && isValidEmail(email.value)
     }
 
+
+    /**
+     * It lets MainActivity display a success dialog and should log the user’s information.
+     */
     private fun getUserInformation(): String {
-        return ""
+        return "User information:\n" +
+                "First name: ${firstName.value}\n" +
+                "Last name: ${lastName.value}\n" +
+                "Email: ${email.value}\n" +
+                "Username: ${username.value}\n" +
+                "Phone number: ${phoneNumber.areaCode}-${phoneNumber.number}\n" +
+                "Sessions: ${sessions.value}\n"
     }
+
 
     /**
      * Convenience method similar to [MediatorLiveData.addSource], except that it bulk adds sources
