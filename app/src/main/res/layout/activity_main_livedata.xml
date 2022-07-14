@@ -7,6 +7,7 @@
     <data>
 
         <import type="com.raywenderlich.android.databindingobservables.model.Session" />
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -142,6 +143,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:text="@{@string/username_format(viewModel.username)}"
+                android:visibility="@{viewModel.showUsername ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/phoneNumberAreaCodeEditText"
                 tools:text="Your username is: firstname_lastname"

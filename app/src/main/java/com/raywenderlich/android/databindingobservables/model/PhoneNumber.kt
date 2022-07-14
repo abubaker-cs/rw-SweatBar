@@ -41,11 +41,17 @@ import com.raywenderlich.android.databindingobservables.BR
 /** A model that wraps the phone number's 2 parts. */
 class PhoneNumber : BaseObservable() {
 
-    // TODO: Make the phone number and its fields observable
+    // TO DO: Make the phone number and its fields observable
+    // :Bindable - This lets the Data Binding Library generate an entry for it in a class, BR.java.
+    // This entry is a static immutable integer field of the same name, areaCode, and it identifies
+    // when PhoneNumber‘s areaCode field changes.
     @get:Bindable
     var areaCode: String = ""
         set(value) {
             field = value
+
+            // When areaCode‘s value changes, you propagate the change to notify any observers.
+            // You do this by using areaCode‘s generated field in BR.java.
             notifyPropertyChanged(BR.areaCode)
         }
 

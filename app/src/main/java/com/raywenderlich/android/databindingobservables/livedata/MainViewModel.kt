@@ -40,6 +40,7 @@ import androidx.lifecycle.Observer
 import com.raywenderlich.android.databindingobservables.model.PhoneNumber
 import com.raywenderlich.android.databindingobservables.model.Session
 import com.raywenderlich.android.databindingobservables.utils.getEmailPrefix
+import com.raywenderlich.android.databindingobservables.utils.isValidEmail
 import java.util.*
 
 private const val DEFAULT_FIRST_NAME = ""
@@ -73,10 +74,29 @@ class MainViewModel : ViewModel() {
 
 
     // TODO: Add username
+
+    val showUsername: LiveData<Boolean> = Transformations.map(
+
+        // You use the email property, which is a LiveData instance, to control whether to display or
+        // hide the username on the UI.
+        email,
+
+        // 1. When the user’s email is valid, showUsername emits true to show the username.
+        // 2. But when the email is invalid, showUsername emits false to hide it.
+        ::isValidEmail
+
+    )
+
+    // Whenever email‘s value changes, generateUsername uses this latest value to generate a
+    // new username, which username then emits.
+    val username: LiveData<String> = Transformations.map(email, ::generateUsername)
+
     // TODO: Add a way to enable the registration button
 
     // TODO: Add phone number
     val phoneNumber = PhoneNumber()
+
+    // ----------------------------------------------------------------------
 
     private val _showRegistrationSuccessDialog = MutableLiveData(false)
     val showRegistrationSuccessDialog: LiveData<Boolean>
